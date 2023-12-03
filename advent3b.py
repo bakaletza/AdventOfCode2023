@@ -15,7 +15,7 @@ for i in range(len(data)):
     data[i] = "." + data[i] + "."
 
 # process the data by finding numbers and making a list of them and locations
-# row, start, stop, partNumber, adjFlag
+# row, start, stop, partNumber
 locations = []
 for i in range(len(data)):
     number = False
@@ -44,7 +44,6 @@ for i in range(len(data)):
                     info.append(j - lenNumber)
                     info.append(j - 1)
                     info.append(partNumber)
-                    info.append(False)
                     locations.append(info)
                 # reset for next number
                 number = False
@@ -64,14 +63,7 @@ for i in range(len(data)):
                     if(adjCount <= 2 and j >= locations[k][1] - 1 and j <= locations[k][2] + 1):
                         adjCount += 1
                         adjSum *= locations[k][3]
-                        # print("adjacent ", end = "")
-                        # print(locations[k])
             if(adjCount == 2):
-                print("found gear " + str(i) + " " + str(j) + " " + str(adjSum))
                 total += adjSum
-
-
-# for i in range(len(locations)):
-#     print(locations[i])
 
 print(total)
