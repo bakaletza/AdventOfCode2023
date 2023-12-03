@@ -1,3 +1,5 @@
+# Amy Bakaletz - 2023
+
 # read in the data file
 file = open("advent3.txt", "r")
 data = file.read().strip('\n\r').splitlines()
