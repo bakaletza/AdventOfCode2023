@@ -1,43 +1,99 @@
 # Amy Bakaletz - 2023
 
+# l1 = list
+# m = mapping
+# returns l2
+def processMap(l1, m):
+    # now process each seed
+    l2 = []
+    for i in range(len(l1)):
+        value = l1[i]
+        for j in range(len(m)):
+            dest = m[j][0]
+            source = m[j][1]
+            ran = m[j][2]
+            if (l1[i] > source and l1[i] < source + ran):
+                if(source < dest):
+                    value = value + abs(source - dest)
+                else:
+                    value = value - abs(source - dest)
+                break
+            elif(l1[i] == source):
+                value = dest
+                break
+        l2.append(value)
+        #print(str(l1[i]) + " - " + str(l2[i]))
+    return l2
+
+def makeMap(d):
+    global row
+    m = []
+    while row < len(data) and data[row] != "":
+        nums = [int(x) for x in data[row].split()]
+        m.append([nums[0], nums[1], nums[2]])
+        row += 1
+    return m
+
 # read in the data file
-file = open("advent5test.txt", "r")
+file = open("advent5.txt", "r")
 data = file.read().strip('\n\r').splitlines()
 file.close()
 
 # load all the lists
 # seeds to be processed
 seeds = [int(x) for x in data[0][7:].split()]
+print("seeds ", end = "")
 print(seeds)
 
 # seeds to soil
-seedsToSoil = []
 row = 3
+mapping = makeMap(data)
+soil = processMap(seeds, mapping)
+print("soil ", end = "")
+print(soil)
 
-# START HERE loop through this 7 times to create a mapping table....
+# soil to fertilizer
+row += 2
+mapping = makeMap(data)
+fert = processMap(soil, mapping)
+print("fert ", end = "")
+print(fert)
 
-while data[row] != "":
-    print(data[row])
-    nums = [int(x) for x in data[row].split()]
-    source = nums[1]
-    dest = nums[0]
-    r = nums[2]
-    for i in range(r):
-        seedsToSoil.append([source+i, dest+i])
-    row += 1
-for i in range(len(seedsToSoil)):
-    print(seedsToSoil[i])
+# fertilizer to water
+row += 2
+mapping = makeMap(data)
+water = processMap(fert, mapping)
+print("water ", end = "")
+print(water)
 
-# now process each seed
-for i in range(len(seeds)):
-    found = False
-    for j in range(len(seedsToSoil)):
-        if(seedsToSoil[j][0] == seeds[i]):
-            print("source " + str(seedsToSoil[j][0]) + " dest " + str(seedsToSoil[j][1]))
-            found = True
-    if(not found):
-        print("source " + str(seeds[i]) + " dest " + str(seeds[i]))
+# water to light
+row += 2
+mapping = makeMap(data)
+light = processMap(water, mapping)
+print("light ", end = "")
+print(light)
 
+# light to temp
+row += 2
+mapping = makeMap(data)
+temp = processMap(light, mapping)
+print("temp ", end = "")
+print(temp)
 
+# temp to humidity
+row += 2
+mapping = makeMap(data)
+humidity = processMap(temp, mapping)
+print("humi ", end = "")
+print(humidity)
+
+# humidity to location
+row += 2
+mapping = makeMap(data)
+location = processMap(humidity, mapping)
+print("location ", end = "")
+print(location)
+
+print(min(location))
 
 
