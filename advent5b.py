@@ -1,5 +1,7 @@
 # Amy Bakaletz - 2023
 
+# This code works on test data but crashes on real data due to lists too long - will fix later, maybe
+
 # l1 = list
 # m = mapping
 # returns l2
