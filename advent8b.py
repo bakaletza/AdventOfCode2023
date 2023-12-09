@@ -22,6 +22,13 @@ aNodes = []
 for i in range(len(nodes)):
     if(nodes[i][2] == "A"):
         aNodes.append(i)
+
+# find nodes that end in Z
+zNodes = []
+for i in range(len(nodes)):
+    if(nodes[i][2] == "Z"):
+        zNodes.append(i)
+
 count = 0
 
 while not found:
@@ -37,18 +44,9 @@ while not found:
                 aNodes[i] = j
                 break
 
-    zNode = True
-    for i in range(len(aNodes)):
-        if(nodes[aNodes[i]][2] != "Z"):
-            zNode = False
-    if zNode:
+    if(aNodes == zNodes):
         print(count)
         found = True
-
-
-
-
-
     else:
         nextDirIndex += 1
         if(nextDirIndex == len(dir)):
