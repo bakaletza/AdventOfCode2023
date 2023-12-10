@@ -19,15 +19,14 @@ for i in range(len(data)):
             if(diff != 0):
                 allZeros = False
     # extrapolate
-    nums[row].append(0)
+    nums[row].insert(0,0)
     row -= 1
     while row >= 0:
-        value = nums[row+1][-1] + nums[row][-1]
-        nums[row].append(value)
+        value = nums[row][0] - nums[row+1][0]
+        nums[row].insert(0,value)
         if row == 0:
             sum += value
         row -= 1
 
+    print(nums)
 print(sum)
-
-
