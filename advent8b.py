@@ -39,6 +39,8 @@ print(aNodes)
 print(zNodes)
 while not found:
     count += 1
+    if(count%1000000 == 0):
+        print(count)
     nextDir = dir[nextDirIndex]
 
     for i in range(len(aNodes)):
