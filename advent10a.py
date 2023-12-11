@@ -1,7 +1,8 @@
 # read in the data file
-file = open("advent10test.txt", "r")
+file = open("advent10.txt", "r")
 data = file.read().strip('\n\r').splitlines()
 file.close()
+output = open("advent10dump.txt", "w")
 
 # make a 2D array with a border of dots
 width = len(data[0])
@@ -47,66 +48,65 @@ elif(pipes[row][col-1] in "-FL"):
     lastDir = "l"
 
 while not done:
-    print(str(row) + " " + str(col) + " " + pipes[row][col])
     if pipes[row][col] == "S":
         done = True
     elif(pipes[row][col] == "-"):
         # look left or right
-        if(pipes[row][col-1] in '-FLS' and lastDir != "r"):
+        if(lastDir == "l"):
             # move left
             col -= 1
             lastDir = "l"
-        elif(pipes[row][col+1] in '-7JS' and lastDir != "l"):
+        else:
             # move right
             col += 1
             lastDir = "r"
     elif(pipes[row][col] == "|"):
         # look up or down
-        if(pipes[row-1][col] in '|F7S' and lastDir != "d"):
+        if(lastDir == "u"):
             # move up
             row -= 1
             lastDir = "u"
-        elif(pipes[row+1][col] in '|JLS' and lastDir != "u"):
+        else:
             # move down
             row += 1
             lastDir = "d"
     elif(pipes[row][col] == 'L'):
         # look up or right
-        if(pipes[row-1][col] in '|F7S' and lastDir != "d"):
+        if(lastDir == "l"):
             # move up
             row -= 1
             lastDir = "u"
-        elif(pipes[row][col+1] in '-7JS' and lastDir != "l"):
+        else:
             # move right
             col += 1
             lastDir = "r"
     elif(pipes[row][col] == "J"):
         # look up or left
-        if(pipes[row-1][col] in '|F7S' and lastDir != "d"):
+        if(lastDir == "r"):
             # move up
             row -= 1
             lastDir = "u"
-        elif(pipes[row][col-1] in '-FLS' and lastDir != "r"):
+        else:
             # move left
             col -= 1
             lastDir = "l"
     elif(pipes[row][col] == "7"):
         # look down or left
-        if(pipes[row+1][col] in '|LJS' and lastDir != "u"):
+        if(lastDir == "r"):
             # move down
             row += 1
             lastDir = "d"
-        elif(pipes[row][col-1] in '-FLS' and lastDir != "r"):
+        else:
             # move left
             col -= 1
-            lasDir = "l"
+            lastDir = "l"
     elif (pipes[row][col] == "F"):
         # look down or right
-        if (pipes[row+1][col] in '|LJS' and lastDir != "u"):
+        if (lastDir == "l"):
             # move down
             row += 1
             lastDir = "d"
-        elif (pipes[row][col+1] in '-7JS' and lastDir != "l"):
+        else:
             # move right
             col += 1
             lastDir = "r"
