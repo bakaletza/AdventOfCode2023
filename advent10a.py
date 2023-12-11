@@ -2,7 +2,6 @@
 file = open("advent10.txt", "r")
 data = file.read().strip('\n\r').splitlines()
 file.close()
-output = open("advent10dump.txt", "w")
 
 # make a 2D array with a border of dots
 width = len(data[0])
