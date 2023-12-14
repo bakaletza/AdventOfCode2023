@@ -7,7 +7,7 @@ def equalColumns(l, col1, col2):
     return same
 
 # read in the data file
-file = open("advent13.txt", "r")
+file = open("advent13test.txt", "r")
 data = file.read().strip('\n\r').splitlines()
 file.close()
 
