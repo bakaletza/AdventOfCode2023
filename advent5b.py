@@ -37,7 +37,7 @@ def makeMap(d):
     return m
 
 # read in the data file
-file = open("advent5.txt", "r")
+file = open("advent5test.txt", "r")
 data = file.read().strip('\n\r').splitlines()
 file.close()
 

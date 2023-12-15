@@ -39,10 +39,7 @@ print(aNodes)
 print(zNodes)
 while not found:
     count += 1
-    if(count%100000 == 0):
-        print(count)
     nextDir = dir[nextDirIndex]
-
     for i in range(len(aNodes)):
         skipLoop = False
         thisNode = aNodes[i]
@@ -66,9 +63,12 @@ while not found:
                         rightIndex[thisNode] = j
                     break
     #print(str(aNodes[0]) + " " + str(aNodes[1]))
-    if(aNodes == zNodes):
+    found = True
+    for i in range(len(aNodes)):
+        if(aNodes[i] not in zNodes):
+            found = False
+    if found:
         print(count)
-        found = True
     else:
         nextDirIndex += 1
         if(nextDirIndex == len(dir)):
