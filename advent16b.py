@@ -6,17 +6,12 @@ def traversePath(d, r, c):
     global count
     while True:
         if r < 0 or r >= len(grid) or c < 0 or c >= len(grid[0]):
-            print("return bounds")
             return
         elif energized[r][c] == "#":
             if(d in direction[r][c]):
-                print("return energized")
                 return
             else:
                 direction[r][c] += d
-        else:
-            count += 1
-            print(str(count) + " " + d + " row " + str(r) + " col " + str(c))
         energized[r][c] = "#"
         if grid[r][c] == ".":
             if d == "R":
@@ -82,15 +77,73 @@ for i in range(len(data)):
         energized[i].append(".")
         direction[i].append("")
 
-count = 0
-traversePath("R", 0, 0)
-print(energized)
-count = 0
-for i in range(len(energized)):
-    for j in range(len(energized[0])):
-        print(energized[i][j], end = " ")
-        if(energized[i][j] == "#"):
-            count += 1
-    print()
-print(count)
+max = 0
+# top row
+print("top")
+for i in range(len(grid[0])):
+    traversePath("D", 0, i)
+    count = 0
+    for j in range(len(energized)):
+        for k in range(len(energized[0])):
+            if(energized[j][k] == "#"):
+                count += 1
+    if count > max:
+        max = count
+    # reinitialize
+    for j in range(len(energized)):
+        for k in range(len(energized[0])):
+            energized[j][k] = "."
+            direction[j][k] = ""
 
+# bottom row
+print("bottom")
+for i in range(len(grid[0])):
+    traversePath("U", len(grid)-1, i)
+    count = 0
+    for j in range(len(energized)):
+        for k in range(len(energized[0])):
+            if(energized[j][k] == "#"):
+                count += 1
+    if count > max:
+        max = count
+    # reinitialize
+    for j in range(len(energized)):
+        for k in range(len(energized[0])):
+            energized[j][k] = "."
+            direction[j][k] = ""
+
+# left
+print("left")
+for i in range(1, len(grid)-1):
+    traversePath("R", i, 0)
+    count = 0
+    for j in range(len(energized)):
+        for k in range(len(energized[0])):
+            if(energized[j][k] == "#"):
+                count += 1
+    if count > max:
+        max = count
+    # reinitialize
+    for j in range(len(energized)):
+        for k in range(len(energized[0])):
+            energized[j][k] = "."
+            direction[j][k] = ""
+
+# right
+print("right")
+for i in range(1, len(grid)-1):
+    traversePath("L", i, len(grid[0])-1)
+    count = 0
+    for j in range(len(energized)):
+        for k in range(len(energized[0])):
+             if(energized[j][k] == "#"):
+                count += 1
+    if count > max:
+        max = count
+    # reinitialize
+    for j in range(len(energized)):
+        for k in range(len(energized[0])):
+            energized[j][k] = "."
+            direction[j][k] = ""
+print()
+print(max)
