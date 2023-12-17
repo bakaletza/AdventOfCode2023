@@ -72,7 +72,7 @@ def traversePath(d, r, c):
 
 grid = []
 energized = [] # dot if not energized, # if energized (then count those)
-direction = []
+direction = [] # added due to infinite loop, if you already visited in this direction, quit!
 for i in range(len(data)):
     grid.append([])
     energized.append([])
