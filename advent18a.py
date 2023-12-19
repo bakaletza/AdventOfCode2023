@@ -35,11 +35,12 @@ for i in range(len(data)):
         #print(str(row) + " " + str(col))
 print(endpoints)
 
-# tip from subreddit
-# got shoelace formula from https://artofproblemsolving.com/wiki/index.php/Shoelace_Theorem
-# Use shoelace to get inner area. Then sum upp the outer boundary length
+# tried floodfill algorithm but got recursion overflow errors
+# found this tip from aoc subreddit:
+# Use shoelace formula to get inner area. Then sum up the outer boundary length
 # and divide it by two, then add 1. Add them all together and you got picks theorem
 
+# got shoelace formula from https://artofproblemsolving.com/wiki/index.php/Shoelace_Theorem
 # shoelace 1/2((x1y2 + x2y3 + ... + xny1) - (y1x2 + y2x3 + ... + ynx1))
 sum1=0
 sum2=0
