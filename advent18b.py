@@ -2,40 +2,36 @@ file = open("advent18.txt", "r")
 data = file.read().strip('\n\r').splitlines()
 file.close()
 
-# build the grid filled with .
-size = 700
-grid = []
-for i in range(size):
-    grid.append([])
-    for j in range(size):
-        grid[i].append(".")
-
 # start in the middle and fill in all the edges
 endpoints = []
-row = int(size/2)
-col = int(size/2)
+row = 100000000
+col = 100000000
+boundary = 0
 for i in range(len(data)):
-    dir = data[i][0:1]
+    lastDigit = data[i][-2]
+    if lastDigit == "0":
+        dir = "R"
+    elif lastDigit == "1":
+        dir = "D"
+    elif lastDigit == "2":
+        dir = "L"
+    else:
+        dir = "U"
     sp1 = data[i].find(" ")
     sp2 = data[i].find(" ",sp1+1)
-    dist = int(data[i][2:sp2])
-    color = data[i][sp2+2:sp2+9]
-    #print(dir + " " + len + " " + color)
-    for j in range(dist):
-        endpoints.append([row,col])
-        grid[row][col] = "#"
-        if dir == "R":
-            col += 1
-        elif dir == "L":
-            col -= 1
-        elif dir == "U":
-            row -= 1
-        elif dir == "D":
-            row += 1
-        #print(str(row) + " " + str(col))
+    dist = int("0x" + data[i][sp2+3:sp2+8], 16)
+    print(str(dir) + " " + str(dist))
+    if dir == "R":
+        col += dist
+    elif dir == "L":
+        col -= dist
+    elif dir == "U":
+        row -= dist
+    elif dir == "D":
+        row += dist
+    endpoints.append([row, col])
+    boundary += dist
 print(endpoints)
-
-# tried floodfill algorithm but got recursion overflow errors
 
 # found this tip from aoc subreddit:
 # Use shoelace formula to get inner area. Then sum up the outer boundary length
@@ -51,14 +47,7 @@ for i in range(len(endpoints)-1):
 sum1 += endpoints[-1][0] * endpoints[0][1]
 sum2 += endpoints[-1][1] * endpoints[0][0]
 shoelace = int(0.5 * abs(sum1 - sum2))
-print(shoelace)
 
-boundary = 0
-for i in range(len(grid)):
-    for j in range(len(grid)):
-        if(grid[i][j] == "#"):
-            boundary += 1
-print(boundary)
 boundary /= 2
 boundary += 1
 area = int(shoelace + boundary)
