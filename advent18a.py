@@ -49,7 +49,7 @@ for i in range(len(endpoints)-1):
     sum2 += endpoints[i][1] * endpoints[i+1][0]
 sum1 += endpoints[-1][0] * endpoints[0][1]
 sum2 += endpoints[-1][1] * endpoints[0][0]
-shoelace = 0.5 * abs(sum1 - sum2)
+shoelace = int(0.5 * abs(sum1 - sum2))
 print(shoelace)
 
 boundary = 0
@@ -60,5 +60,5 @@ for i in range(len(grid)):
 print(boundary)
 boundary /= 2
 boundary += 1
-area = shoelace + boundary
+area = int(shoelace + boundary)
 print(area)
