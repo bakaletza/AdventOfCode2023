@@ -2,29 +2,6 @@ file = open("advent18.txt", "r")
 data = file.read().strip('\n\r').splitlines()
 file.close()
 
-# got this algorithm from https://plainenglish.io/blog/a-python-example-of-the-flood-fill-algorithm-bced7f96f569
-
-def flood_fill(x ,y, old, new):
-    # we need the x and y of the start position, the old value,
-    # and the new value
-    # the flood fill has 4 parts
-    # firstly, make sure the x and y are inbounds
-    if x < 0 or x >= len(grid[0]) or y < 0 or y >= len(grid):
-        return
-    # secondly, check if the current position equals the old value
-    if grid[x][y] != old:
-        return
-
-    # thirdly, set the current position to the new value
-    if grid[x][y] == old:
-        grid[x][y] = new
-
-    # fourthly, attempt to fill the neighboring positions
-    flood_fill(x+1, y, old, new)
-    flood_fill(x-1, y, old, new)
-    flood_fill(x, y+1, old, new)
-    flood_fill(x, y-1, old, new)
-
 # build the grid filled with .
 size = 700
 grid = []
@@ -34,6 +11,7 @@ for i in range(size):
         grid[i].append(".")
 
 # start in the middle and fill in all the edges
+endpoints = []
 row = int(size/2)
 col = int(size/2)
 for i in range(len(data)):
@@ -44,6 +22,7 @@ for i in range(len(data)):
     color = data[i][sp2+2:sp2+9]
     #print(dir + " " + len + " " + color)
     for j in range(dist):
+        endpoints.append([row,col])
         grid[row][col] = "#"
         if dir == "R":
             col += 1
@@ -54,15 +33,31 @@ for i in range(len(data)):
         elif dir == "D":
             row += 1
         #print(str(row) + " " + str(col))
+print(endpoints)
 
-# flood fill
-# works in sample data, does not work for rest
-flood_fill(350, 350, ".", "#")
+# tip from subreddit
+# got shoelace formula from https://artofproblemsolving.com/wiki/index.php/Shoelace_Theorem
+# Use shoelace to get inner area. Then sum upp the outer boundary length
+# and divide it by two, then add 1. Add them all together and you got picks theorem
 
-area = 0
+# shoelace 1/2((x1y2 + x2y3 + ... + xny1) - (y1x2 + y2x3 + ... + ynx1))
+sum1=0
+sum2=0
+for i in range(len(endpoints)-1):
+    sum1 += endpoints[i][0] * endpoints[i+1][1]
+    sum2 += endpoints[i][1] * endpoints[i+1][0]
+sum1 += endpoints[-1][0] * endpoints[0][1]
+sum2 += endpoints[-1][1] * endpoints[0][0]
+shoelace = 0.5 * abs(sum1 - sum2)
+print(shoelace)
+
+boundary = 0
 for i in range(len(grid)):
     for j in range(len(grid)):
         if(grid[i][j] == "#"):
-            area += 1
-
+            boundary += 1
+print(boundary)
+boundary /= 2
+boundary += 1
+area = shoelace + boundary
 print(area)
